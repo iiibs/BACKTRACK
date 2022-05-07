@@ -1,7 +1,7 @@
 #include <assert.h>
 
 #include <functional>
-using std::unary_function;
+//using std::unary_function;
 using std::binary_function;
 using std::function;
 #include <string>
@@ -16,16 +16,17 @@ using std::endl;
 //#define DEBUG3 //print out even more details, maybe for finding a bug
 
 #define SMART //those parts of the algorithm that make is really effective
-//#undef SMART //the algorithm without backtracking - brute force
+#undef SMART //the algorithm without backtracking - brute force
 
 #include "BackTrack.h"
 
 //the specific problem that we want to solve by backtrack
+//#define QUEENSPLACING //place n queens on an n x n chessboard, none of them should attacked another
 //#define MAPCOLORING //set different colors for a map, no neighboring coutries should have the same color
-#define QUEENSPLACING //place n queens on an n x n chessboard, none of them should attacked another
+#define GROUPTWISTING //a group of the elements of a set are going around, find the shortest solution
 
 #define REDUCED //it is important to have a smaller, but not simpler problem, which still has all the properties of the original
-#undef REDUCED //the original real problem
+//#undef REDUCED //the original real problem
 
 #define STOP //stops after the first and each session
 //#undef STOP //go and find all solutions
@@ -58,8 +59,8 @@ You will use a T enum of Choice, and a vector (or just an array) of Decisions fo
  #include "MapColoring.h"
 #elif defined(QUEENSPLACING)
  #include "QueensPlacing.h"
-#elif defined(CUBEREARRANGING)
- #include "CubeRearranging.h"
+#elif defined(GROUPTWISTING)
+ #include "GroupTwisting.h"
 #else
 #endif
 
@@ -119,10 +120,12 @@ In case of the N-queens problem there is no need for a helper structure.
  #include "QueensPlacing.h"
 #elif defined(CUBEREARRANGING)
  #include "CubeRearranging.h"
+#elif defined(GROUPTWISTING)
+ #include "GroupTwisting.h"
 #else
 #endif
 
-struct ValidChoice2:public function<bool(tCombinationIterator,tCombinationIterator,float)>
+struct ValidChoice:public function<bool(tCombinationIterator,tCombinationIterator,float)>
 {
  bool operator()(const tCombinationIterator &begin_decision,const tCombinationIterator &end_decision,float &n_checks)
  {
@@ -136,24 +139,7 @@ struct ValidChoice2:public function<bool(tCombinationIterator,tCombinationIterat
   The problem statement almost always exactly defines what the validator needs to test.
   We also count the checks in the validator function for statistical purposes.
   */
-  return Validator2(begin_decision,end_decision,n_checks);
- }
-};
-
-struct ValidChoice:public binary_function<tCombinationIterator,tCombinationIterator,bool>
-{
- bool operator()(const tCombinationIterator &begin_decision,const tCombinationIterator &end_decision) const
- {
-  /*
-  The validator function takes iterators pointing to the beginning and end of the
-   Combination vector of Decisions.
-  This function should return true if the requirements are met.
-  Remember that at the time of the call every element except the last
-   has already been checked for validity, so you only need to check
-   that the back element, *(end-1), is valid.
-  The problem statement almost always exactly defines what the validator needs to test.
-  */
-  return Validator(begin_decision,end_decision);
+  return Validator(begin_decision,end_decision,n_checks);
  }
 };
 
@@ -188,10 +174,7 @@ void printcombination(tCombinationIterator itDecision)
  unsigned int i_print=0;
  for(tCombinationIterator it_print=Combination.begin();it_print!=itDecision;it_print++)
  {
-  #if defined(MAPCOLORING)
-  std::cout << " color of ";
-  #endif
-  cout << aDecisions[i_print];
+  std::cout << " decision " << aDecisions[i_print];
   cout << " should be " << aChoices[static_cast<unsigned int>(*it_print)] << endl;
   i_print++;
  }
@@ -200,7 +183,7 @@ void printcombination(tCombinationIterator itDecision)
 
 }
 
-struct sPrintCombination:public unary_function<tCombinationIterator,bool>
+struct sPrintCombination:public function<bool(tCombinationIterator)>
 {
  bool operator()(const tCombinationIterator end_decision) 
  {
@@ -211,6 +194,7 @@ struct sPrintCombination:public unary_function<tCombinationIterator,bool>
 
 void PrintStatistics(float n_smart_checks,float n_brute_froce_checks)
 {
+ /*
  cout << endl;
  cout << "number of checks performed: " << nChecks << endl;
  #ifdef DEBUG3
@@ -232,11 +216,14 @@ void PrintStatistics(float n_smart_checks,float n_brute_froce_checks)
  fChecksforonevalidation=1; //one check for common color
  #elif defined(QUEENSPLACING)
  fChecksforonevalidation=2; //#1: check for common column, #2: check for common diagonal
+ #elif defined(GROUPTWISTING)
+ fChecksforonevalidation=2; //#1: check for common column, #2: check for common diagonal
  #else
  #endif
  fAllchecks*=(NDECISIONS-1)*NCHOICES*fChecksforonevalidation;
  cout << "number of checks we would have needed: " << fAllchecks << endl;
  cout <<" so backtrack saved us " << 100.0*(fAllchecks-nChecks)/fAllchecks << " % of the work" << endl;
+ */
 }
 
 bool IsLast()
@@ -260,8 +247,7 @@ int main(int argc,char* argv [])
  BackTrack(const T&  first, const T&  last);
  Now you can construct a BackTrack object and initialize the Combination.
  */
- //BackTrack<Choice,tCombinationIterator,ValidChoice,sPrintCombination>Backtrack(Choice(0),Choice(nChoices-1));
- BackTrack<Choice,tCombinationIterator,ValidChoice2,FinalCheck,sPrintCombination>Backtrack(Choice(0),Choice(nChoices-1));
+ BackTrack<Choice,tCombinationIterator,ValidChoice,FinalCheck,sPrintCombination>Backtrack(Choice(0),Choice(nChoices-1));
 
  /*
  Set the initial value of the combination, for example set each decision to the first possible choice.
@@ -272,6 +258,9 @@ int main(int argc,char* argv [])
  #if defined(MAPCOLORING)
   BuildMap();
  #elif defined(QUEENSPLACING)
+ #elif defined(GROUPTWISTING)
+  SetBoard();
+  PrintBoard();
  #else
  #endif
 
