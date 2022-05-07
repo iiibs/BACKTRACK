@@ -1,5 +1,6 @@
 #ifdef MACROS
- //colors of the map
+
+//colors of the map
  #ifdef REDUCED
   #define CHOICES \
   black,white
@@ -125,21 +126,7 @@
  // when all the connections are set, then this number will not change further
  unsigned int NumberNeighbors[nDecisions];
 
- bool Validator(tCombinationIterator begin_decision,tCombinationIterator end_decision)
- {
-  Decision last_state=Decision (end_decision-begin_decision-1);
-  Choice last_color=*(end_decision-1);
-  bool Valid=true;
-  for(unsigned int i=0;i<NumberNeighbors[last_state];i++)
-  {
-   Decision other_decision=Neighbor[last_state][i];
-   if(other_decision<last_state&&*(begin_decision+other_decision)==last_color)
-    return false;
-  }
-  return true;
- }
-
- bool Validator2(tCombinationIterator begin_decision,tCombinationIterator end_decision,float &n_checks)
+ bool Validator(tCombinationIterator begin_decision,tCombinationIterator end_decision,float &n_checks)
  {
   Decision last_state=Decision (end_decision-begin_decision-1);
   Choice last_color=*(end_decision-1);
@@ -218,7 +205,7 @@ inline void Connect(Decision s1,Decision s2)
 
 }
 
-void BuildMap ()
+void BuildMap()
 {
 
  for(unsigned int iDecision=0;iDecision<nDecisions;iDecision++)

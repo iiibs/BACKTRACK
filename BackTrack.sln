@@ -10,15 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		info.txt = info.txt
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MapColoring", "MapColoring\MapColoring.vcxproj", "{CDD6BC69-1641-498E-8300-F7873D79F463}"
-	ProjectSection(ProjectDependencies) = postProject
-		{24357BCC-DB96-4E6E-B98A-B6692F2F7F74} = {24357BCC-DB96-4E6E-B98A-B6692F2F7F74}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QueensPlacing", "QueensPlacing\QueensPlacing.vcxproj", "{287474CC-EC06-4A9F-9BD6-727E88B00C95}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CubeRearranging", "CubeRearranging\CubeRearranging.vcxproj", "{AED93EFE-9487-4958-9F57-BAE4995A34B9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -29,15 +20,6 @@ Global
 		{24357BCC-DB96-4E6E-B98A-B6692F2F7F74}.Debug|x64.Build.0 = Debug|x64
 		{24357BCC-DB96-4E6E-B98A-B6692F2F7F74}.Release|x64.ActiveCfg = Release|x64
 		{24357BCC-DB96-4E6E-B98A-B6692F2F7F74}.Release|x64.Build.0 = Release|x64
-		{CDD6BC69-1641-498E-8300-F7873D79F463}.Debug|x64.ActiveCfg = Debug|x64
-		{CDD6BC69-1641-498E-8300-F7873D79F463}.Release|x64.ActiveCfg = Release|x64
-		{CDD6BC69-1641-498E-8300-F7873D79F463}.Release|x64.Build.0 = Release|x64
-		{287474CC-EC06-4A9F-9BD6-727E88B00C95}.Debug|x64.ActiveCfg = Debug|x64
-		{287474CC-EC06-4A9F-9BD6-727E88B00C95}.Release|x64.ActiveCfg = Release|x64
-		{287474CC-EC06-4A9F-9BD6-727E88B00C95}.Release|x64.Build.0 = Release|x64
-		{AED93EFE-9487-4958-9F57-BAE4995A34B9}.Debug|x64.ActiveCfg = Debug|x64
-		{AED93EFE-9487-4958-9F57-BAE4995A34B9}.Release|x64.ActiveCfg = Release|x64
-		{AED93EFE-9487-4958-9F57-BAE4995A34B9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
