@@ -143,12 +143,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BackTrack.h" />
-    <ClInclude Include="CubeRearranging.h" />
+    <ClInclude Include="GroupTwisting.h" />
     <ClInclude Include="MapColoring.h" />
     <ClInclude Include="QueensPlacing.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackTrack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
